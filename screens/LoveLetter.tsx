@@ -22,6 +22,19 @@ export const LoveLetter: React.FC = () => {
 
   const handleAccept = () => {
     setIsAccepted(true);
+
+    // WhatsApp configuration
+    const phoneNumbers = ["6285335769655", "6285745270398"]; // Masukkan 2 nomor di sini
+    const message = "I accept! Love you too Hubyy! ❤️✨";
+    const encodedMessage = encodeURIComponent(message);
+
+    // Redirect to WhatsApp for each number
+    // Note: Browser might block the second tab, stagger them to help
+    phoneNumbers.forEach((phoneNumber, index) => {
+      setTimeout(() => {
+        window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+      }, 1000 + (index * 1000)); // Tunda 1 detik untuk nomor pertama, 2 detik untuk nomor kedua
+    });
   };
 
   return (
