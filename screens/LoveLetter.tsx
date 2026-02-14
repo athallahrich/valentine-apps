@@ -24,17 +24,19 @@ export const LoveLetter: React.FC = () => {
     setIsAccepted(true);
 
     // WhatsApp configuration
-    const phoneNumbers = ["6285335769655", "6285745270398"]; // Masukkan 2 nomor di sini
-    const message = "I accept! Love you too Hubyy! ❤️✨";
+    const phoneNumbers = ["6285335769655", "6285745270398"];
+    const message = "I accept! Love you too Hubyy! ❤️ ✨";
     const encodedMessage = encodeURIComponent(message);
 
-    // Redirect to WhatsApp for each number
-    // Note: Browser might block the second tab, stagger them to help
-    phoneNumbers.forEach((phoneNumber, index) => {
-      setTimeout(() => {
-        window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-      }, 1000 + (index * 1000)); // Tunda 1 detik untuk nomor pertama, 2 detik untuk nomor kedua
-    });
+    // Open first number
+    window.open(`https://wa.me/${phoneNumbers[0]}?text=${encodedMessage}`, '_blank');
+
+    // Open second number with a very short delay
+    // Note: Browser popup blockers often block the 2nd window. 
+    // You might need to click "Allow popups" in the browser address bar.
+    setTimeout(() => {
+      window.open(`https://wa.me/${phoneNumbers[1]}?text=${encodedMessage}`, '_blank');
+    }, 500);
   };
 
   return (
