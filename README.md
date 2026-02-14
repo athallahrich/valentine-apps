@@ -1,20 +1,43 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Our Journey: A Digital Scrapbook 💌✨
 
-# Run and deploy your AI Studio app
+A special digital scrapbook created specifically for the most amazing person in my life. This web application is a journey through our memories, milestones, and the love that keeps us growing together every day.
 
-This contains everything you need to run your app locally.
+## 🌟 Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1HBrUdnyCcUQuYZ-rHgm3WwZc8esPnB_C
+- **🔐 Secure Entry**: A personalized Lock Screen that only opens with our special anniversary date (the day it all began!).
+- **📖 Story Timeline**: A chronological walk down memory lane, from our first cinema date in Malang to our current journey.
+- **📸 Interactive Polaroid Wall**: A scattered collection of our favorite moments. Grab them, toss them around, and flip them to see the sweet captions behind each "photo".
+- **✉️ Digital Love Letter**: A heart-touching message revealed through a typewriter effect, dedicated to "Hubyy".
 
-## Run Locally
+## 🛠️ Tech Stack
 
-**Prerequisites:**  Node.js
+Built with love and some pretty cool tech:
+- **React** + **Vite** for a fast and smooth experience.
+- **Tailwind CSS** for the beautiful "scrapbook" aesthetic.
+- **Framer Motion** for those silky smooth transitions.
+- **Lucide React** for the dainty, elegant icons.
 
+## 🚀 Run Locally
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+If you want to run this journey on your own machine:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/athallahrich/valentine-apps.git
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the magic**:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+*“You make the ordinary feel like an adventure. I promise to keep making memories, laughing at your jokes, and loving you more with each passing day.”* ❤️
+
+Created with ❤️ by Athallah.
