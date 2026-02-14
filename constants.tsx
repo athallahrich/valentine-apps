@@ -53,7 +53,7 @@ export const TIMELINE_DATA: Memory[] = [
 ];
 
 export const POLAROID_DATA: PolaroidPhoto[] = [
-  { id: 'p1', src: 'https://internal-copper-awscyi1hch.edgeone.app/WhatsApp%20Image%202026-02-14%20at%2016.54.32.jpeg', caption: 'Di HP ku yang ini, pertama kita ngapel ini hahaa', date: '', rotation: -15, top: 2, left: 2, zIndex: 1 },
+  { id: 'p1', src: 'https://plain-apac-prod-public.komododecks.com/202602/14/mLATQ63sS8NPdQ4W1ueT/image.jpg', caption: 'Di HP ku yang ini, pertama kita ngapel ini hahaa', date: '', rotation: -15, top: 2, left: 2, zIndex: 1 },
   { id: 'p2', src: 'https://instasize.com/api/image/0dce02713973c4e89cedb6de0eecbdd1d96d4a07eeac39b342929922ff24c1c1.jpeg', caption: 'Pantai Pertama kita', date: '', rotation: 12, top: 5, left: 78, zIndex: 2 },
   { id: 'p3', src: 'https://instasize.com/api/image/554598647c8ef1a7d9e12461b1ff2535ca2115a4766e205ad4f8afc921dd9ae6.jpeg', caption: 'Buah kesukaan kamu', date: '', rotation: -20, top: 88, left: 85, zIndex: 3 },
   { id: 'p4', src: 'https://instasize.com/api/image/5fbb03c494b698fd641f60cc1f4fbe80b1fb0d901d66f30c9ad3463f3be4d7f1.jpeg', caption: 'Silly faces :P', date: '', rotation: 18, top: 85, left: 5, zIndex: 4 },
@@ -64,7 +64,7 @@ export const POLAROID_DATA: PolaroidPhoto[] = [
   { id: 'p9', src: 'https://instasize.com/api/image/5f33ec4c58cb2473d0dc4536ac7e4519c2fe21c654e4503ed0ef544a558dd071.jpeg', caption: 'Silly faces again :P', date: '', rotation: -22, top: 45, left: 85, zIndex: 9 },
   { id: 'p10', src: 'https://instasize.com/api/image/56fcc5baba1126a79fc557945b6dffb5648e8f3ab534533252c87badeb7b1b7b.jpeg', caption: 'KIMBAB', date: '', rotation: 10, top: 25, left: 20, zIndex: 10 },
   { id: 'p11', src: 'https://instasize.com/api/image/eb05ee657f2f87ba85ec8ed69a66360a79d7482423ff902ec4dbee910435090e.jpeg', caption: 'Lotso hubyy', date: '', rotation: -8, top: 25, left: 65, zIndex: 11 },
-  { id: 'p12', src: 'https://organisational-lavender-u7uflq5acl.edgeone.app/12.jpeg', caption: 'Jadi Shreek', date: '', rotation: 20, top: 65, left: 20, zIndex: 12 },
+  { id: 'p12', src: 'https://plain-apac-prod-public.komododecks.com/202602/14/90JUNUsMejFfLkuN3MVj/image.jpg', caption: 'Jadi Shreek', date: '', rotation: 20, top: 65, left: 20, zIndex: 12 },
   { id: 'p13', src: 'https://instasize.com/api/image/1d0499df3a5ed096f4317cfc07af2d348f3157ec8027b2931f66275c1b139565.jpeg', caption: 'Hunting Mainan', date: '', rotation: -5, top: 65, left: 65, zIndex: 13 },
   { id: 'p14', src: 'https://plain-apac-prod-public.komododecks.com/202602/14/wIfVHam5C2NJtstCgqyd/image.jpg', caption: 'Maem Ramen', date: '', rotation: 5, top: 15, left: 10, zIndex: 14 },
   { id: 'p15', src: 'https://plain-apac-prod-public.komododecks.com/202602/14/LzafCGyk7I3PlcUriqHF/image.jpg', caption: 'Baaa', date: '', rotation: -25, top: 15, left: 70, zIndex: 15 },
