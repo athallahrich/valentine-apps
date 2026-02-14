@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Lock, LockOpen, Plane, CheckCircle } from 'lucide-react';
-import { CORRECT_PIN } from '../constants';
+import { useAppData } from '../context/DataContext';
 import { WashiTape } from '../components/WashiTape';
 
 interface LockScreenProps {
@@ -8,6 +8,7 @@ interface LockScreenProps {
 }
 
 export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
+  const { data } = useAppData();
   const [pin, setPin] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -44,7 +45,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
   };
 
   const checkPin = (enteredPin: string) => {
-    if (enteredPin === CORRECT_PIN) {
+    if (enteredPin === data.pin) {
       setIsSuccess(true);
       setTimeout(onUnlock, 1000);
     } else {
@@ -83,7 +84,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
           <div className="relative mb-12 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
             <WashiTape className="w-32 left-1/2 -translate-x-1/2 -top-3" rotation={1} />
             <div className="bg-paper-white p-6 md:p-8 shadow-float border border-gray-100 relative">
-              <h1 className="font-hand text-4xl md:text-5xl text-ink text-center leading-none">Our Story</h1>
+              <h1 className="font-hand text-4xl md:text-5xl text-ink text-center leading-none">{data.appTitle}</h1>
               <div className="absolute -bottom-4 -right-4 bg-white px-2 py-1 shadow-sm transform -rotate-3 text-[10px] md:text-xs text-pencil">
                 Vol. 1
               </div>

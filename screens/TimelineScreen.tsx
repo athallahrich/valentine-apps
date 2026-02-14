@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heart, Coffee, Star } from 'lucide-react';
-import { TIMELINE_DATA } from '../constants';
+import { useAppData } from '../context/DataContext';
 import { WashiTape } from '../components/WashiTape';
 
 interface TimelineScreenProps {
@@ -8,6 +8,7 @@ interface TimelineScreenProps {
 }
 
 export const TimelineScreen: React.FC<TimelineScreenProps> = ({ onContinue }) => {
+  const { data } = useAppData();
   return (
     <div className="min-h-screen pt-20 md:pt-24 pb-24 md:pb-32 px-4 max-w-4xl mx-auto relative">
 
@@ -30,7 +31,7 @@ export const TimelineScreen: React.FC<TimelineScreenProps> = ({ onContinue }) =>
       </div>
 
       {/* Events */}
-      {TIMELINE_DATA.map((item, index) => (
+      {data.timeline.map((item, index) => (
         <div key={item.id} className={`relative flex flex-col md:flex-row items-center justify-between mb-20 md:mb-32 group ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
 
           {/* Date Label (Tape) */}

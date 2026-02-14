@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, CheckCircle } from 'lucide-react';
-import { LETTER_CONTENT } from '../constants';
+import { useAppData } from '../context/DataContext';
 
 export const LoveLetter: React.FC = () => {
+  const { data } = useAppData();
   const [displayedText, setDisplayedText] = useState('');
   const [isAccepted, setIsAccepted] = useState(false);
 
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
-      if (index <= LETTER_CONTENT.length) {
-        setDisplayedText(LETTER_CONTENT.slice(0, index));
+      if (index <= data.letterContent.length) {
+        setDisplayedText(data.letterContent.slice(0, index));
         index++;
       } else {
         clearInterval(interval);
@@ -18,25 +19,26 @@ export const LoveLetter: React.FC = () => {
     }, 40); // Typing speed
 
     return () => clearInterval(interval);
-  }, []);
+  }, [data.letterContent]);
 
   const handleAccept = () => {
     setIsAccepted(true);
 
     // WhatsApp configuration
-    const phoneNumbers = ["6285335769655", "6285745270398"];
+    const phoneNumbers = data.waNumbers;
     const message = "I accept! Love you too Hubyy! ❤️ ✨";
     const encodedMessage = encodeURIComponent(message);
 
-    // Open first number
-    window.open(`https://wa.me/${phoneNumbers[0]}?text=${encodedMessage}`, '_blank');
+    // Open numbers - handle cases where there might be 1 or 2 numbers
+    if (phoneNumbers.length > 0) {
+      window.open(`https://wa.me/${phoneNumbers[0]}?text=${encodedMessage}`, '_blank');
 
-    // Open second number with a very short delay
-    // Note: Browser popup blockers often block the 2nd window. 
-    // You might need to click "Allow popups" in the browser address bar.
-    setTimeout(() => {
-      window.open(`https://wa.me/${phoneNumbers[1]}?text=${encodedMessage}`, '_blank');
-    }, 500);
+      if (phoneNumbers.length > 1) {
+        setTimeout(() => {
+          window.open(`https://wa.me/${phoneNumbers[1]}?text=${encodedMessage}`, '_blank');
+        }, 500);
+      }
+    }
   };
 
   return (
@@ -69,7 +71,7 @@ export const LoveLetter: React.FC = () => {
 
             {/* Animated Signature (simplified as text here for React purity) */}
             <div className="self-end mr-8 w-48 relative text-right">
-              <div className="font-hand text-3xl text-ink transform -rotate-6">Hubyy</div>
+              <div className="font-hand text-3xl text-ink transform -rotate-6">{data.letterSignature}</div>
             </div>
 
             {/* Wax Seal Decor */}

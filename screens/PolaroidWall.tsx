@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Shuffle } from 'lucide-react';
-import { POLAROID_DATA } from '../constants';
+import { useAppData } from '../context/DataContext';
+import { useEffect } from 'react';
 import { WashiTape } from '../components/WashiTape';
 import { PolaroidPhoto } from '../types';
 
 export const PolaroidWall: React.FC = () => {
-  const [photos, setPhotos] = useState<PolaroidPhoto[]>(POLAROID_DATA);
+  const { data } = useAppData();
+  const [photos, setPhotos] = useState<PolaroidPhoto[]>(data.polaroids);
   const [flippedId, setFlippedId] = useState<string | null>(null);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [hasMoved, setHasMoved] = useState(false);
   const [dragStartPosition, setDragStartPosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    setPhotos(data.polaroids);
+  }, [data.polaroids]);
 
   const shufflePhotos = () => {
     const shuffled = photos.map(photo => ({

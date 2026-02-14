@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TimelineScreen } from './screens/TimelineScreen';
 import { PolaroidWall } from './screens/PolaroidWall';
 import { LockScreen } from './screens/LockScreen';
 import { LoveLetter } from './screens/LoveLetter';
 import { NavBar } from './components/NavBar';
 import { AppScreen } from './types';
+import { DataProvider } from './context/DataContext';
+import { AdminDashboard } from './screens/AdminDashboard';
 
-function App() {
+function MainApp() {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>(AppScreen.LOCK);
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.code === 'Space') {
+        e.preventDefault();
+        setShowAdmin(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleUnlock = () => {
     setIsUnlocked(true);
@@ -43,7 +57,17 @@ function App() {
           isUnlocked={isUnlocked}
         />
       )}
+
+      {showAdmin && <AdminDashboard onClose={() => setShowAdmin(false)} />}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <DataProvider>
+      <MainApp />
+    </DataProvider>
   );
 }
 
