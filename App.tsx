@@ -20,7 +20,7 @@ function App() {
       case AppScreen.LOCK:
         return <LockScreen onUnlock={handleUnlock} />;
       case AppScreen.TIMELINE:
-        return <TimelineScreen />;
+        return <TimelineScreen onContinue={() => setCurrentScreen(AppScreen.POLAROID_WALL)} />;
       case AppScreen.POLAROID_WALL:
         return <PolaroidWall />;
       case AppScreen.LOVE_LETTER:
@@ -32,13 +32,15 @@ function App() {
 
   return (
     <div className="w-full min-h-screen">
-      {renderScreen()}
-      
+      <div key={currentScreen} className="page-transition-wrapper">
+        {renderScreen()}
+      </div>
+
       {currentScreen !== AppScreen.LOCK && (
-        <NavBar 
-          currentScreen={currentScreen} 
-          setScreen={setCurrentScreen} 
-          isUnlocked={isUnlocked} 
+        <NavBar
+          currentScreen={currentScreen}
+          setScreen={setCurrentScreen}
+          isUnlocked={isUnlocked}
         />
       )}
     </div>
