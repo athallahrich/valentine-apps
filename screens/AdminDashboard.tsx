@@ -56,20 +56,28 @@ const MusicTabContent: React.FC<{ localData: any, setLocalData: any }> = ({ loca
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
                 <button
                     onClick={() => setLocalData({ ...localData, musicType: 'mp3' })}
-                    className={`p-6 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-2 border-2 ${localData.musicType === 'mp3' ? 'bg-primary/5 border-primary text-primary shadow-sm' : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'}`}
+                    className={`p-4 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-2 border-2 ${localData.musicType === 'mp3' ? 'bg-primary/5 border-primary text-primary shadow-sm' : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'}`}
                 >
-                    <span className="text-2xl">🎵</span>
+                    <span className="text-xl">🎵</span>
                     <span>DIRECT MP3</span>
                     <span className="text-[10px] font-normal opacity-70">Auto-play & Full Song</span>
                 </button>
                 <button
-                    onClick={() => setLocalData({ ...localData, musicType: 'spotify-redirect' })}
-                    className={`p-6 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-2 border-2 ${localData.musicType === 'spotify-redirect' ? 'bg-blue-50 border-blue-400 text-blue-600 shadow-sm' : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'}`}
+                    onClick={() => setLocalData({ ...localData, musicType: 'spotify-embed' })}
+                    className={`p-4 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-2 border-2 ${localData.musicType === 'spotify-embed' ? 'bg-[#1DB954]/5 border-[#1DB954] text-[#1DB954] shadow-sm' : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'}`}
                 >
-                    <span className="text-2xl">🚀</span>
+                    <span className="text-xl">📻</span>
+                    <span>SPOTIFY EMBED</span>
+                    <span className="text-[10px] font-normal opacity-70">Mini Player Widget</span>
+                </button>
+                <button
+                    onClick={() => setLocalData({ ...localData, musicType: 'spotify-redirect' })}
+                    className={`p-4 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-2 border-2 ${localData.musicType === 'spotify-redirect' ? 'bg-blue-50 border-blue-400 text-blue-600 shadow-sm' : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'}`}
+                >
+                    <span className="text-xl">🚀</span>
                     <span>SPOTIFY APP</span>
                     <span className="text-[10px] font-normal opacity-70">Open External App</span>
                 </button>
@@ -77,18 +85,40 @@ const MusicTabContent: React.FC<{ localData: any, setLocalData: any }> = ({ loca
 
             <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">
-                    {localData.musicType === 'mp3' ? 'Music URL (Direct MP3)' : 'Spotify Song Link'}
+                    {localData.musicType === 'mp3' ? 'Music URL (Direct MP3)' : localData.musicType === 'spotify-embed' ? 'Spotify Link / Embed Code' : 'Spotify Song Link'}
                 </label>
 
                 <div className="flex gap-2 mb-4">
                     <input
                         type="text"
                         value={localData.musicUrl}
-                        onChange={e => setLocalData({ ...localData, musicUrl: e.target.value })}
+                        onChange={e => {
+                            let value = e.target.value;
+                            // 1. Auto-parse Spotify Iframe
+                            if (value.includes('<iframe') && value.includes('src="')) {
+                                const match = value.match(/src="([^"]+)"/);
+                                if (match && match[1]) value = match[1];
+                            }
+
+                            // 2. Handle Spotify links to ensure /embed/ format
+                            if ((localData.musicType === 'spotify-embed' || localData.musicType === 'spotify-redirect') && value.includes('open.spotify.com/')) {
+                                // Remove international prefix if present (e.g., intl-id/)
+                                value = value.replace(/intl-[a-z]+\//, '');
+
+                                if (localData.musicType === 'spotify-embed' && !value.includes('/embed/')) {
+                                    value = value.replace('open.spotify.com/', 'open.spotify.com/embed/');
+                                } else if (localData.musicType === 'spotify-redirect' && value.includes('/embed/')) {
+                                    value = value.replace('/embed/', '/');
+                                }
+                                // Remove query params for a clean URL
+                                value = value.split('?')[0];
+                            }
+                            setLocalData({ ...localData, musicUrl: value });
+                        }}
                         className="flex-grow p-4 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all shadow-sm font-mono text-xs"
                         placeholder={
                             localData.musicType === 'mp3' ? "Paste .mp3 URL here..." :
-                                "Paste regular Spotify link (https://open.spotify.com/track/...)"
+                                "Paste Link or Embed Code here..."
                         }
                     />
                     {localData.musicType === 'mp3' && (
@@ -110,19 +140,39 @@ const MusicTabContent: React.FC<{ localData: any, setLocalData: any }> = ({ loca
                     )}
                 </div>
 
+                {/* Real-time Preview */}
+                {localData.musicType === 'spotify-embed' && localData.musicUrl && (
+                    <div className="mb-6 animate-in fade-in slide-in-from-top-2">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Live Preview:</p>
+                        <div className="bg-white p-2 rounded-2xl border-2 border-dashed border-gray-200">
+                            <iframe
+                                style={{ borderRadius: '12px' }}
+                                src={localData.musicUrl}
+                                width="100%"
+                                height="152"
+                                frameBorder="0"
+                                allowFullScreen
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                loading="lazy"
+                            />
+                        </div>
+                    </div>
+                )}
+
                 <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Song Title / Label</label>
                 <input
                     type="text"
                     value={localData.musicTitle}
                     onChange={e => setLocalData({ ...localData, musicTitle: e.target.value })}
-                    className="w-full p-4 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all shadow-sm"
+                    className="w-full p-4 border-2 border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all shadow-sm mb-4"
                     placeholder="e.g. Bernadya - Kita Buat Menyenangkan"
                 />
 
-                <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
                     <p className="text-[10px] text-gray-500 leading-relaxed uppercase font-bold mb-1 opacity-60">Help & Tips</p>
                     <p className="text-[10px] text-gray-500 leading-relaxed">
                         {localData.musicType === 'mp3' && "Gunakan link langsung (akhiran .mp3) agar musik bisa otomatis berputar."}
+                        {localData.musicType === 'spotify-embed' && "Langsung paste kode Share > Embed Spotify di sini. Kami akan merapikan linknya secara otomatis agar tidak error!"}
                         {localData.musicType === 'spotify-redirect' && "Klik Share > Copy Song Link. Aplikasi akan membuka aplikasi Spotify pasanganmu untuk memutar lagu secara full."}
                     </p>
                 </div>

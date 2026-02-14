@@ -12,7 +12,7 @@ interface AppData {
     waNumbers: string[];
     musicUrl: string;
     musicTitle: string;
-    musicType: 'mp3' | 'spotify-redirect';
+    musicType: 'mp3' | 'spotify-embed' | 'spotify-redirect';
 }
 
 interface DataContextType {
